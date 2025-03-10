@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 
 export const dataContext = createContext();
 
-const UserContext = () => {
+const UserContext = ({children}) => {
+
+  let [startRes, setStartRes] = useState(false);
+
+  let value = {
+    startRes, setStartRes
+  }
+
   return (
-    <div></div>
+    <div>
+      <dataContext.Provider value={value}>
+       {children}
+      </dataContext.Provider>
+    </div>
   )
 }
 
