@@ -8,7 +8,7 @@ import { FaArrowUp } from "react-icons/fa6";
 import { dataContext } from "../context/UserContext";
 import Chat from "./Chat";
 
-
+  
 const Home = () => {
 
   let{startRes, setStartRes} = useContext(dataContext);
