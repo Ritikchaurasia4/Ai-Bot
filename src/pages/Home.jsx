@@ -11,10 +11,9 @@ import Chat from "./Chat";
   
 const Home = () => {
 
-  let{startRes, setStartRes} = useContext(dataContext);
+  let{startRes, setStartRes, popUp, setPopUp, input, setInput, feature, setFeature} = useContext(dataContext);
 
   const handleSubmit = async (e)=>{
-    e.preventDefault();
     setStartRes(true);
   }
 
@@ -31,23 +30,40 @@ const Home = () => {
             <RiImageAiFill />  
             <span>Upload image</span>
           </div>
-          <div className="genImg">
+          <div className="genImg" onClick={()=>setFeature("genImg")}>
             <BsImage />
             <span>Generate image</span>
           </div>
-          <div className="chat">
+          <div className="chat" onClick={()=>setFeature("chat")}>
             <BsChatLeft />
             <span>Let's chat </span>
           </div>
         </div>
       </div>: <Chat/>
       }
-
-      
-      <form action="" className="input-box" onSubmit={(e)=>handleSubmit(e)}>
-        <button id="add"><FaPlus /></button>
-        <input type="" placeholder="Ask some questions..." />
-        <button id="submit"><FaArrowUp /></button>
+      <form action="" className="input-box" onSubmit={(e)=>{
+        e.preventDefault();
+        if(input){
+          handleSubmit(e)
+        }
+      }}>
+        {
+          popUp ? <div className="pop-up">
+          <div className="select-up">
+            <RiImageAiFill />  
+            <span>Upload image</span>
+          </div>
+          <div className="select-gen" onClick={()=>setFeature("genImg")}>
+            <BsImage />
+            <span>Generate image</span>
+          </div>
+        </div> : null
+        }
+        <div id="add" onClick={()=>{setPopUp(prev=>!prev)}}>{feature == "genImg" ? <BsImage /> : <FaPlus />}</div>
+        <input type="" placeholder="Ask some questions..." value={input} onChange={(e)=>setInput(e.target.value)}/>
+        {
+          input ? <button id="submit"><FaArrowUp /></button> : null
+        }
       </form>
     </div>
   );
