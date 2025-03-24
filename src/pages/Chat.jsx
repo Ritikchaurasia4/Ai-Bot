@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { dataContext, prevUser } from '../context/UserContext';
 
 const Chat = () => {
+
+  let{input, setInput, prevInput, setPrevInput} = useContext(dataContext);
+  
   return (
     <div className='chat-page'>
         <div className="user">
             <img src="" />
-            <span>users</span>
+            <span>{prevUser.prompt}</span>
         </div>
         <div className="ai">
             <img src="" />

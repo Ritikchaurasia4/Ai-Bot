@@ -68,6 +68,10 @@ nav{
   color: orange;
 }
 
+#genImg{
+  color: rgba(29, 154, 154, 0.416);
+}
+
 .upImg:hover, .genImg:hover, .chat:hover{
   background-color: rgba(128, 128, 128, 0.322);
 }
