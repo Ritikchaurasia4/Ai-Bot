@@ -126,6 +126,7 @@ form input{
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .user, .ai{
@@ -137,6 +138,16 @@ form input{
   padding: 20px 30px;
   border-radius: 20px;
   font-size: 20px;
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+.user img{
+  width: 200px ;
+  border-radius: 20px;
+
 }
 
 .pop-up{

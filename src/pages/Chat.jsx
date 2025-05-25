@@ -3,17 +3,20 @@ import { dataContext, prevUser } from '../context/UserContext';
 
 const Chat = () => {
 
-  let{input, setInput, prevInput, setPrevInput} = useContext(dataContext);
+  let{input, setInput, prevInput, setPrevInput, showResult, setShowResult, feature, setfeature, preFeature, setPreFeature} = useContext(dataContext);
   
   return (
     <div className='chat-page'>
         <div className="user">
-            <img src="" />
-            <span>{prevUser.prompt}</span>
+          {preFeature == "upimg" ? <><img src={prevUser.imgUrl} alt=''/>
+           <span>{prevUser.prompt}</span></> : <span>{prevUser.prompt}</span> }
+            {/* {prevUser.imgUrl && <img src={prevUser.imgUrl} alt="Uploaded" />}
+            <span>{prevUser.prompt}</span> */}
         </div>
         <div className="ai">
-            <img src="" />
-            <span>Ai</span>
+          {preFeature == "genimg" ? <><img src={prevUser.imgUrl} alt=''/>
+          {showResult ? <span>Loading...</span>:<span>{showResult}</span>}</> : !showResult ? <span>Loading...</span>:<span>{showResult}</span>}
+            
         </div>
     </div>
   )

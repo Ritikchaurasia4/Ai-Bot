@@ -10,7 +10,7 @@ export async  function generateResponse(){
 
     let RequestOption = {
         method:"POST",
-        Headers:{'Content-Type': 'application/json'},
+        headers:{'Content-Type': 'application/json'},
         body:JSON.stringify({
             "contents": [{
             "parts":[
@@ -30,8 +30,12 @@ export async  function generateResponse(){
     try{
         let response = await fetch(API_URL, RequestOption);
         let data = await response.json();
-        let apiResponse = data.candidate[0].content.parts[0].text.replace(/<[^>]*>?/gm, "$1").trim();
+        console.log(data);
+        let apiResponse = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g,"$1").trim();
+        console.log(apiResponse)
         return apiResponse;
     }
-    catch(error){}
+    catch(error){
+      console.log("Api call failed Error:", error);
+    }
 }

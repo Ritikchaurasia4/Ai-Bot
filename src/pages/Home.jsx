@@ -7,23 +7,30 @@ import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp } from "react-icons/fa6";
 import { dataContext, prevUser, user } from "../context/UserContext";
 import Chat from "./Chat";
-import { generateResponse } from "../gemini";
+import { generateResponse } from "../gemini.js";
 
   
 const Home = () => {
 
-  let{startRes, setStartRes, popUp, setPopUp, input, setInput, feature, setFeature, prevInput, setPrevInput} = useContext(dataContext);
+  let{startRes, setStartRes, popUp, setPopUp, input, setInput, feature, setFeature, showResult, setShowResult, preFeature, setPreFeature} = useContext(dataContext);
 
   const handleSubmit = async (e)=>{
+    setPreFeature(feature);
+    console.log(feature)
     setStartRes(true);
-    // setPrevInput(input);
+    setShowResult("");
     prevUser.data = user.data;
     prevUser.mime_type = user.mime_type;
     prevUser.imgUrl = user.imgUrl;
     prevUser.prompt = input;
     setInput(""); 
-    let result = await generateResponse(input);
-    console.log(result);
+    let result = await generateResponse();
+    setShowResult(result);
+    setFeature("chat");
+    user.data = null
+    user.mime_type = null;
+    user.imgUrl = null;
+    // console.log(result);
   }
 
   const handleImage = (e) =>{
@@ -33,7 +40,6 @@ const Home = () => {
     let reader = new FileReader();
     reader.onload=(event)=>{
       // console.log(reader.result);
-      // console.log(event);
       let base64 = event.target.result.split(',')[1];
       user.data = base64;
       user.mime_type = file.type;
@@ -62,7 +68,7 @@ const Home = () => {
             <RiImageAiFill />  
             <span>Upload image</span>
           </div>
-          <div className="genImg" onClick={()=>setFeature("genImg")}>
+          <div className="genImg" onClick={()=>setFeature("genimg")}>
             <BsImage />
             <span>Generate image</span>
           </div>
@@ -83,12 +89,16 @@ const Home = () => {
         {
           popUp ? <div className="pop-up">
           <div className="select-up" onClick={()=>{
+            setPopUp(false);
+            setFeature("chat");
             document.getElementById('inputImg').click()
           }}>
             <RiImageAiFill />  
             <span>Upload image</span>
           </div>
-          <div className="select-gen" onClick={()=>setFeature("genImg")}>
+          <div className="select-gen" onClick={()=>{
+            setPopUp(false);
+            setFeature("genImg")}}>
             <BsImage />
             <span>Generate image</span>
           </div>
